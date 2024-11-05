@@ -10,14 +10,25 @@ int VerificaMatriz(int **mat){
 }
 
 int main(int argc, char *argv){
-	int rcol, rvalue, rrow;
+	if(argc != 2 || argv[1] < 1 || argv[1] > 3){
+		printf("ERRO. Comando esperado: sudoku.exe <dificuldade>");
+		return 0;
+	}
+	int rcol, rvalue, rrow, start;
 	srand(time(0));
 	int **mat = (int **)malloc(9 * sizeof(int*));
 	for(int i = 0; i < 9; i++){
 		mat[i] = (int *)calloc(9, sizeof(int)); 
 	}
+	if(argv[1] == 1){
+		start = 29;
+	} else if(argv[1] == 2){
+		start = 25;
+	} else{
+		start = 21;
+	}
 
-	for(int i = 0; i < 29 ; i++){
+	for(int i = 0; i < start ; i++){
 		rcol = rand() % (9-1+1);
 		rrow = rand() % (9-1+1);
 		rvalue = rand() % (10-1)+1;
