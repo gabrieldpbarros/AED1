@@ -3,9 +3,9 @@
 #include <string.h>
 
 typedef struct listaCompras{
-    char compras[20];
+    char compras[21];
     struct listaCompras *seg;
-}celula;
+} celula;
 
 void imprimeLista(celula *lst){
     celula *aux;
@@ -25,7 +25,7 @@ int repeticao(celula *lst, char *item){
 // Algoritmo de bubble sort.
 void ordenaLista(celula *lst){ // O algoritmo considera que a lista existe.
     celula *i, *j;
-    char temp[20];
+    char temp[21];
 
     for(i = lst->seg; i != NULL; i = i->seg){
         for(j = i->seg; j != NULL; j = j->seg){
@@ -41,7 +41,7 @@ void ordenaLista(celula *lst){ // O algoritmo considera que a lista existe.
 int main(void){
     // Declaração das variáveis.
     int qtdCompras, i;
-    char *itens, item[20];
+    char *itens, item[21];
     celula *lst, *lstnew, *aux;
     celula **listas; // Armazena as listas independentes.
 
@@ -49,7 +49,7 @@ int main(void){
     scanf("%d", &qtdCompras);
     getchar(); // Descarta o caractere de nova linha.
 
-    itens = malloc(1000);
+    itens = malloc(21001);
     listas = malloc(qtdCompras * sizeof(celula*));
 
     for(i = 0; i < qtdCompras; i++){
@@ -61,7 +61,7 @@ int main(void){
         lst->seg = NULL;
 
         // Recebe a lista do usuário.
-        fgets(itens, 1000, stdin);
+        fgets(itens, 21001, stdin);
 
 
         while(itens[j] != '\0'){
@@ -107,7 +107,7 @@ int main(void){
             aux = aux->seg;
             free(temp);
         }
-        
+
     }
     free(listas);
     free(itens);
