@@ -108,8 +108,8 @@ int main(void){
             free(temp);
         }
         
-        free(listas[i]);
     }
+    free(listas);
     free(itens);
 
     return 0;
