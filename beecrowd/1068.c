@@ -2,20 +2,32 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct equacao{
-    char *elemento[2];
+typedef struct celula{
+    char elemento[2];
     struct celula *seg;
 } celula;
 
-int insere(celula *lst, char *item){
-    celula *lstnew;
+void insere(celula *lst, char *item){
+    celula *lstnew = malloc(sizeof(celula));
 
     strcpy(lstnew->elemento, item);
+    lstnew->seg = NULL;
 
     celula *aux = lst;
     while(aux->seg != NULL)
-        aux->seg;
+        aux = aux->seg;
     aux->seg = lstnew;
+}
+
+void imprimeLista(celula *lst){
+    celula *aux = lst->seg;
+    while(aux != NULL){
+        printf("%s", aux->elemento);
+        if(aux->seg != NULL) printf(" ");
+
+        aux = aux->seg;
+    }
+    printf("\n");
 }
 
 void freeList(celula *lst){
@@ -28,18 +40,35 @@ void freeList(celula *lst){
 }
 
 int main(void){
-    int qtd_expressoes;
+    int qtd_expressoes, i;
     char eq[1001];
     celula *cabeca;
     celula **geral;
 
-    cabeca = malloc(sizeof(celula));
-    cabeca->seg = NULL;
+    scanf("%d", &qtd_expressoes);
+    getchar();
 
-    for(int i = 0; i < qtd_expressoes; i++){
+    geral = malloc(qtd_expressoes * sizeof(celula*));
 
+    for(i = 0; i < qtd_expressoes; i++){
+        int j = 0;
+        cabeca = malloc(sizeof(celula));
+        cabeca->seg = NULL;
+
+        fgets(eq, 1001, stdin);
+
+        while(eq[j] != '\0'){
+            char item[2] = {eq[j], '\0'};
+            insere(cabeca, item);
+
+            j++;
+        }
+
+        geral[i] = cabeca;
     }
+    for(i = 0; i < qtd_expressoes; i++) imprimeLista(geral[i]);
     
-    freeList(cabeca);
+    for(i = 0; i < qtd_expressoes; i++) freeList(geral[i]);
+    free(geral);
     return 0;
 }
