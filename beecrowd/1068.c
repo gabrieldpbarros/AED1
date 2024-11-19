@@ -2,25 +2,25 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct celula{
+typedef struct stack{
     char elemento[2];
-    struct celula *seg;
-} celula;
+    struct stack *seg;
+} Stack;
 
-void insere(celula *lst, char *item){
-    celula *lstnew = malloc(sizeof(celula));
+void insere(Stack *lst, char *item){
+    Stack *lstnew = malloc(sizeof(Stack));
 
     strcpy(lstnew->elemento, item);
     lstnew->seg = NULL;
 
-    celula *aux = lst;
+    Stack *aux = lst;
     while(aux->seg != NULL)
         aux = aux->seg;
     aux->seg = lstnew;
 }
 
-void imprimeLista(celula *lst){
-    celula *aux = lst->seg;
+void imprimeLista(Stack *lst){
+    Stack *aux = lst->seg;
     while(aux != NULL){
         printf("%s", aux->elemento);
         if(aux->seg != NULL) printf(" ");
@@ -30,10 +30,10 @@ void imprimeLista(celula *lst){
     printf("\n");
 }
 
-void freeList(celula *lst){
-    celula *aux = lst;
+void freeList(Stack *lst){
+    Stack *aux = lst;
     while(aux != NULL){
-        celula *temp = aux;
+        Stack *temp = aux;
         aux = aux->seg;
         free(temp);
     }
@@ -42,17 +42,17 @@ void freeList(celula *lst){
 int main(void){
     int qtd_expressoes, i;
     char eq[1001];
-    celula *cabeca;
-    celula **geral;
+    Stack *cabeca;
+    Stack **geral;
 
     scanf("%d", &qtd_expressoes);
     getchar();
 
-    geral = malloc(qtd_expressoes * sizeof(celula*));
+    geral = malloc(qtd_expressoes * sizeof(Stack*));
 
     for(i = 0; i < qtd_expressoes; i++){
         int j = 0;
-        cabeca = malloc(sizeof(celula));
+        cabeca = malloc(sizeof(Stack));
         cabeca->seg = NULL;
 
         fgets(eq, 1001, stdin);
