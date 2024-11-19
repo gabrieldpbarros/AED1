@@ -111,6 +111,6 @@ int main(void){
     }
     free(listas);
     free(itens);
-
+    
     return 0;
 }
