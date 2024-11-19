@@ -1,28 +1,43 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-void sum(int num1, int den1, int num2, int den2, int *res_num, int *res_den){
-    *res_num = num1*den2 + num2*den1;
-    *res_den = den1*den2;
+void sum(int *nums, int *res_num, int *res_den){
+    *res_num = nums[0]*nums[3] + nums[2]*nums[1];
+    *res_den = nums[1]*nums[3];
 }
 
-void subtract(int num1, int den1, int num2, int den2, int *res_num, int *res_den){
-    *res_num = num1*den2 - num2*den1;
-    *res_den = den1*den2;
+void subtract(int *nums, int *res_num, int *res_den){
+    *res_num = nums[0]*nums[3] - nums[2]*nums[1];
+    *res_den = nums[1]*nums[3];
 }
 
-void times(int num1, int den1, int num2, int den2, int *res_num, int *res_den){
-    *res_num = num1*num2;
-    *res_den = den1*den2;
+void times(int *nums, int *res_num, int *res_den){
+    *res_num = nums[0]*nums[2];
+    *res_den = nums[1]*nums[3];
 }
 
-void divided(int num1, int den1, int num2, int den2, int *res_num, int *res_den){
-    *res_num = num1*den2;
-    *res_den = num2*den1;
+void divided(int *nums, int *res_num, int *res_den){
+    *res_num = nums[0]*nums[3];
+    *res_den = nums[2]*nums[1];
 }
 
-void operacao(char *eq){
-    
+void operacao(char *eq, int *numbers, int *num_final, int *den_final){
+    for(int i = 0; eq[i] != '\0'; i++){
+        if(eq[i] == '+'){
+            sum(numbers, num_final, den_final);
+            break;
+        } else if(eq[i] == '-'){
+            subtract(numbers, num_final, den_final);
+            break;
+        } else if(eq[i] == '*'){
+            times(numbers, num_final, den_final);
+            break;
+        } else if(eq[i + 1] == '\0'){
+            divided(numbers, num_final, den_final);
+            break;
+        }
+    }
 }
 
 void simplify(int *num, int *den){
@@ -43,23 +58,41 @@ void simplify(int *num, int *den){
 }
 
 int main(void){
-    int numeros[4], qtd_testes;
+    int numeros[4], qtd_testes, i;
     int *num_final, *den_final;
-    char *entrada;
+    char *entrada, numero[1001];
 
-    scanf("%d", qtd_testes);
-    get_char();
+    scanf("%d", &qtd_testes);
+    getchar();
 
     num_final = malloc(qtd_testes * sizeof(int));
     den_final = malloc(qtd_testes * sizeof(int));
     entrada = malloc(4009);
     
-    for(int i = 0; i < qtd_testes; i++){
-        int j = 0;
-        int num1, num2, den1, den2;
-        fgets(entrada, 4009, stdin);
+    for(i = 0; i < qtd_testes; i++){
+        int j = 0, k = 0, l = 0;
+        fgets(entrada, sizeof(entrada), stdin);
 
+        while(entrada[j] != '\0'){
+            if(entrada[j] == ' ' || entrada[j] == '\n' || strchr("+-*/", entrada[j])){
+                numero[k] = '\0';
+                numeros[l++] = atoi(numero);
+
+                k = 0;
+            } else{
+                numero[k++] = entrada[j];
+            }       
+            j++;
+        }
+
+        operacao(entrada, numeros, &num_final[i], &den_final[i]);
         
+    }
+
+    for(i = 0; i < qtd_testes; i++){
+        printf("%d/%d = ", num_final[i], den_final[i]);
+        simplify(&num_final[i], &den_final[i]);
+        printf("%d/%d\n", num_final[i], den_final[i]);
     }
 
     free(num_final);
