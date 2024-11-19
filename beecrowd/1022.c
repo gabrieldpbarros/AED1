@@ -55,29 +55,34 @@ void simplify(int *num, int *den){
         *num /= mdc;
         *den /= mdc;
     }
+
+    if(*den < 0){
+        *den *= -1;
+        *num *= -1;
+    }
 }
 
 int main(void){
     int numeros[4], qtd_testes, i;
     int *num_final, *den_final;
-    char *entrada, numero[1001];
+    char entrada[4009], numero[1001];
 
     scanf("%d", &qtd_testes);
     getchar();
 
     num_final = malloc(qtd_testes * sizeof(int));
     den_final = malloc(qtd_testes * sizeof(int));
-    entrada = malloc(4009);
     
     for(i = 0; i < qtd_testes; i++){
         int j = 0, k = 0, l = 0;
-        fgets(entrada, sizeof(entrada), stdin);
+        fgets(entrada, 4009, stdin);
 
         while(entrada[j] != '\0'){
-            if(entrada[j] == ' ' || entrada[j] == '\n' || strchr("+-*/", entrada[j])){
+            if(entrada[j] < '0' || entrada[j] > '9' || entrada[j] == '\n'){
                 numero[k] = '\0';
-                numeros[l++] = atoi(numero);
-
+                if(numero[0] != '\0'){
+                    numeros[l++] = atoi(numero);
+                }
                 k = 0;
             } else{
                 numero[k++] = entrada[j];
@@ -97,6 +102,5 @@ int main(void){
 
     free(num_final);
     free(den_final);
-    free(entrada);
     return 0;
 }
