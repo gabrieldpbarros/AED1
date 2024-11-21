@@ -86,6 +86,7 @@ void insertionSort(int n, int *v){
     }
 }
 
+// Ordenação de teto O(n * log(n))
 void mergeSort(int p, int r, int *v){
     if(p < r - 1){
         int q = (p + r) / 2;
