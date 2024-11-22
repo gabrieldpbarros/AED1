@@ -12,7 +12,7 @@ Queue* createQueue(){
     return head;
 }
 
-// 's' é a cabeça da fila e 't' é o final da fila
+// 't' é o final da fila
 int dequeue(Queue *head, Queue **address_t){
     // Verifica se a fila está vazia
     if(head->next == NULL)
@@ -35,14 +35,14 @@ void enqueue(int value, Queue *head, Queue **address_t){
     // Nova célula
     new->content = value;
     new->next = NULL;
-    // Se não há elementos na fila, então 'new' é o primeiro elemento
+    // Se a fila está vazia, então 'new' é o primeiro nó
     if(*address_t == head){
         head->next = new;
-        *address_t = new;
     } else{
-        (*address_t)->next = new; // Cauda da fila aponta para o novo elemento
-        *address_t = new; // Endereço da cauda agora é o do novo elemento
+        (*address_t)->next = new; // Cauda atual aponta para o novo nó
     }
+
+    *address_t = new; // Atualiza o endereço da cauda
 }
 
 void printQueue(Queue *head){
