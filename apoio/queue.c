@@ -23,7 +23,7 @@ int dequeue(Queue *head, Queue **address_t){
     head->next = aux->next; // A fila avança uma posição
 
     if(head->next == NULL) // Se o novo endereço de 's' aponta para uma célula vazia,
-        *address_t = head; // logo a lista está vazia
+        *address_t = head; // logo a fila está vazia
     
     // A posição inicial é liberada
     free(aux);
