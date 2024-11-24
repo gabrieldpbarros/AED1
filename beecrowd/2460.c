@@ -45,7 +45,7 @@ void enqueue(int value, Queue *head, Queue **tail){
     new->participante = value;
     new->next = NULL;
 
-    if(*tail == head){
+    if(*tail == head || head->next == NULL){
         head->next = new;
     } else{
         (*tail)->next = new;
@@ -63,49 +63,51 @@ void printQueue(Queue *head){
     }
 }
 
+void freeQueue(Queue *head){
+    Queue *aux = head->next;
+
+    while(aux != NULL){
+        Queue *temp = aux;
+        aux = aux->next;
+        free(temp);
+    }
+    free(head);
+}
+
 int main(void){
-    int qtd_participantes, qtd_desistentes, elemento, i = 0, j = 0;
-    char *entrada, item[5001];
+    int qtd_participantes, qtd_desistentes, elemento;
+    char *entrada;
+
     Queue *head = createQueue();
     Queue *tail = head;
     // Primeira linha de entrada
     scanf("%d", &qtd_participantes);
     getchar();
 
-    entrada = malloc(50000);
+    entrada = malloc(350000 * sizeof(char));
     // Segunda linha de entrada
-    fgets(entrada, 50000, stdin);
-    while(i < strlen(entrada)){
-        if(entrada[i] != ' ' && entrada[i] != '\n')
-            item[j++] = entrada[i];
-        else{
-            item[j] = '\0';
-            elemento = strtol(item, NULL, 10);
-            enqueue(elemento, head, &tail);
-            j = 0;
-        }
-        i++;
+    fgets(entrada, 350000 * sizeof(char), stdin);
+    char *token = strtok(entrada, " \n");
+    while(token != NULL){
+        elemento = strtol(token, NULL, 10);
+        enqueue(elemento, head, &tail);
+        token = strtok(NULL, " \n");
     }
-    i = 0;
     // Terceira linha de entrada
     scanf("%d", &qtd_desistentes);
     getchar();
     // Quarta linha de entrada
-    fgets(entrada, 50000, stdin);
-    while(i < strlen(entrada)){
-        if(entrada[i] != ' ' && entrada[i] != '\n')
-            item[j++] = entrada[i];
-        else{
-            item[j] = '\0';
-            elemento = strtol(item, NULL, 10);
-            dequeue(elemento, head, &tail);
-            j = 0;
-        }
-        i++;
+    fgets(entrada, 350000 * sizeof(char), stdin);
+    token = strtok(entrada, " \n");
+    while(token != NULL){ 
+        elemento = strtol(token, NULL, 10);
+        dequeue(elemento, head, &tail);
+        token = strtok(NULL, " \n");
     }
 
     printQueue(head);
 
+    freeQueue(head);
     free(entrada);
     return 0;
 }
