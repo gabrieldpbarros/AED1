@@ -53,6 +53,17 @@ void printQueue(Queue *head){
         printf("Posicao %d = %d\n", i++, aux->content);
 }
 
+void freeQueue(Queue *head){
+    Queue *aux = head->next;
+
+    while(aux != NULL){
+        Queue *temp = aux;
+        aux = aux->next;
+        free(temp);
+    }
+    free(head);
+}
+
 int main(void){
     Queue *head = createQueue(); // Cabeça da fila
     Queue *tail = head; // Cauda aponta para a cabeça
@@ -68,6 +79,8 @@ int main(void){
     // dequeue(head, &tail);
 
     printQueue(head);
+
+    freeQueue(head);
 
     return 0;
 }
