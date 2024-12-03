@@ -21,7 +21,7 @@
 #include <stdlib.h>
 
 // Além de inserir, garante que o heap obedece às propriedades da
-// estrutura
+// estrutura [O(log(n))]
 void heapInsert(int m, int v[]){
     int f = m + 1;
     while(f > 1 && v[f/2] < v[f]){
@@ -34,7 +34,7 @@ void heapInsert(int m, int v[]){
     }
 }
 
-// Ordena o heap.
+// Corrige o heap quase-certo (ainda não está claro)
 void shuffleHeap(int m, int v[]){
     int t, f = 2;
     while(f <= m){
@@ -48,6 +48,21 @@ void shuffleHeap(int m, int v[]){
         v[f] = t;
 
         f *= 2;
+    }
+}
+
+// Ordena o heap
+void heapSort(int n, int v[]){
+    int m;
+    for(m = 1; m < n; m++)
+        heapInsert(m, v);
+    for(m = n; m > 1; m--){
+        // Troca o primeiro valor com o último do loop
+        int t = v[1];
+        v[1] = v[m];
+        v[m] = t;
+
+        shuffleHeap(m - 1, v);
     }
 }
 

@@ -27,6 +27,23 @@ void intercala(int p, int q, int r, int *v){
     free(w);
 }
 
+int separa(int p, int r, int v[]){
+    int c, j, k, t; // c = pivô (último elemento)
+    c = v[r]; j = p;
+    for(k = p; k < r; k++)
+        if(v[k] <= c){
+            t = v[j];
+            v[j] = v[k];
+            v[k] = t;
+
+            j++;
+        }
+    v[r] = v[j];
+    v[j] = c;
+
+    return j;
+}
+
 // Ordenação de teto O(n^2)
 void boboSort(int n, int *v){
     int i, j, aux;
@@ -93,6 +110,15 @@ void mergeSort(int p, int r, int *v){
         mergeSort(p, q, v);
         mergeSort(q, r, v);
         intercala(p, q, r, v);
+    }
+}
+
+void quickSort(int p, int r, int v[]){
+    int j; // p = início do vetor, r = final do vetor
+    if(p < r){
+        j = separa(p, r, v);
+        quickSort(p, j - 1, v); // j-1 = metade da esquerda
+        quickSort(j + 1, r, v); // j+1 = metade da direita
     }
 }
 
