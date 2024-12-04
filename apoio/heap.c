@@ -34,8 +34,8 @@ void heapInsert(int m, int v[]){
     }
 }
 
-// Corrige o heap quase-certo (ainda não está claro)
-void shuffleHeap(int m, int v[]){
+// Corrige o heap após a remoção ou troca de elementos do heap.
+void heapify(int m, int v[]){
     int t, f = 2;
     while(f <= m){
         if(f < m && v[f] < v[f + 1])
@@ -62,7 +62,7 @@ void heapSort(int n, int v[]){
         v[1] = v[m];
         v[m] = t;
 
-        shuffleHeap(m - 1, v);
+        heapify(m - 1, v);
     }
 }
 

@@ -20,7 +20,7 @@ void intercala(int p, int q, int r, int *v){
         else w[k++] = v[j++];
     }
 
-    while(j < q) w[k++] = v[i++];
+    while(i < q) w[k++] = v[i++];
     while(j < r) w[k++] = v[j++];
     for(i = p; i < r; i++) v[i] = w[i - p];
 
@@ -97,7 +97,7 @@ void insertionSort(int n, int *v){
     int length = n;
     for(j = 1; j < length; j++){
         x = v[j];
-        for(i = j - 1; i <= 0 && v[i] > x; i--)
+        for(i = j - 1; i >= 0 && v[i] > x; i--)
             v[i + 1] = v[i];
         v[i + 1] = x;
     }
