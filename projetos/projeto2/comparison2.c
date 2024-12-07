@@ -3,7 +3,7 @@
 #include "mergesort.h"
 #include <time.h> // clock(), CLOCKS_PER_SEC e clock_t
 
-#define TAM 20000 // Constante para tamanho do vetor
+#define TAM 180000 // Constante para tamanho do vetor
 
 void initializeRandom(void){
     srand((unsigned) time(NULL));
