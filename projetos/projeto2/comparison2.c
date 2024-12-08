@@ -28,7 +28,7 @@ void printAll(int *v1, int *v2, int *v3, int size, clock_t start, clock_t end){
     // Imprime o tempo na tela
     printf("Tempo de execucao (Merge Sort): %lf\n", (double) (end - start) / CLOCKS_PER_SEC); //Conversão para segundos
 
-    // Verificando tempo de execução do algoritmo de ordenação => t3w
+    // Verificando tempo de execução do algoritmo de ordenação => t3
     start = clock(); // Armazena tempo
     merge(v3, 0, size);
     end = clock(); // tempo final - tempo inicial
