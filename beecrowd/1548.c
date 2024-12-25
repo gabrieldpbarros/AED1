@@ -2,12 +2,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct node{
+typedef struct queue{
     int aluno;
-    struct node *next;
+    struct queue *next;
 } Queue;
 
-Queue* createQueue(){
+Queue *createQueue(){
     Queue *head = malloc(sizeof(Queue));  
     head->next = NULL;
     return head;
@@ -19,7 +19,7 @@ void enqueue(int elemento, Queue *head, Queue **tail){
     new->aluno = elemento;
     new->next = NULL;
 
-    if(*tail == NULL || head->next == NULL)
+    if(*tail == NULL)
         head->next = new;
     else
         (*tail)->next = new;
@@ -44,6 +44,7 @@ int track(int item1, int item2, int length, int *v){
         if(v[i] == 0){ // O item não está no vetor.
             v[i++] = item1;
             v[i] = item2;
+            return 0;
         } else if(v[i] == item1){ // O primeiro item está no vetor.
             item1 = 0;
         } else if(v[i] == item2){ // O segundo item está no vetor.
@@ -52,22 +53,25 @@ int track(int item1, int item2, int length, int *v){
             return 1;
         }
     }
-
-    return 0;
 }
 
 int counter(int length, int *v){
     int i = 0, count = 0;
 
-    while(i < length && v[i] != 0)
+    while(i < length && v[i] != 0){
         count++;
+        i++;
+    }
     
     return count;
 }
 
-int bubbleSort(Queue *head, int length, int *v){
-    int temp;
+int bubbleSort(Queue *head, int length){
+    int temp, *v;
+    int i = 0;
     Queue *aux1, *aux2;
+
+    v = calloc(length, sizeof(int));
 
     for(aux1 = head->next; aux1 != NULL; aux1 = aux1->next){
         for(aux2 = aux1->next; aux2 != NULL; aux2 = aux2->next){
@@ -75,29 +79,50 @@ int bubbleSort(Queue *head, int length, int *v){
                 temp = aux1->aluno;
                 aux1->aluno = aux2->aluno;
                 aux2->aluno = temp;
+                v[i] = aux1->aluno;
+                v[++i] = aux2->aluno; 
                 track(aux1->aluno, aux2->aluno, length, v);
+                i++;
             }
         }
     }
     
-    return counter(length, v);
+    int repeticoes = counter(length, v);
+    free(v);
+    return repeticoes;
 }
 
 int main(void){
-    int n, length, i, j, elemento, contador;
-    char *entrada, *token;
-    Queue *head = malloc(sizeof(Queue));  
-    head->next = NULL;
-    Queue *tail = head;
+    int n, length, i, j, num, *contador;
+    char *token;
 
     scanf("%d", &n);
-    getchar();
+    char *entrada = malloc(4000);
+    contador = malloc(n * sizeof(int));
 
-    entrada = malloc(3893);
-    int num_alunos_fixos[n];
+    for(i = 0; i < n; i++){
+        Queue *head = createQueue();
+        Queue *tail = head;
+        scanf("%d", &length);
 
+        if(fgets(entrada, 4000, stdin) != NULL){
+            entrada[strcspn(entrada, "\n")] = '\0';
+            token = strtok(entrada, " ");
+            while(token != NULL){
+                num = atoi(token);
+                enqueue(num, head, &tail);
+                token = strtok(NULL, " ");
+            }
+        }
+
+        contador[i] = length - bubbleSort(head, length);
+        freeQueue(head);
+    }
+
+    for(i = 0; i < n; i++)
+        printf("%d\n", contador[i]);
 
     free(entrada);
-    freeQueue(head);
+    free(contador);
     return 0;
 }
