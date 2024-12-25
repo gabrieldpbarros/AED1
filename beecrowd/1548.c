@@ -1,3 +1,5 @@
+// Tentar corrigir este codigo e entregar corretamente.
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -43,24 +45,24 @@ int track(int item1, int item2, int length, int *v){
     for(i = 0; i < length; i++){
         if(v[i] == 0){ // O item não está no vetor.
             v[i++] = item1;
-            v[i] = item2;
+            if (i < length)
+                v[i] = item2;
             return 0;
-        } else if(v[i] == item1){ // O primeiro item está no vetor.
-            item1 = 0;
-        } else if(v[i] == item2){ // O segundo item está no vetor.
-            item2 = 0;
-        } else if (item1 == 0 && item2 == 0){ // Ambos estão no vetor.
+        } else if(v[i] == item1 || v[i] == item2){ // Algum dos itens está no vetor.
+            if(v[i] == item1) item1 = 0;
+            if(v[i] == item2) item2 = 0;
+        } else if (item1 == 0 && item2 == 0)  // Ambos estão no vetor.
             return 1;
-        }
     }
+
+    return 0;
 }
 
 int counter(int length, int *v){
-    int i = 0, count = 0;
+    int count = 0;
 
-    while(i < length && v[i] != 0){
+    for(int i = 0; i < length && v[i] != 0; i++){
         count++;
-        i++;
     }
     
     return count;
@@ -68,7 +70,6 @@ int counter(int length, int *v){
 
 int bubbleSort(Queue *head, int length){
     int temp, *v;
-    int i = 0;
     Queue *aux1, *aux2;
 
     v = calloc(length, sizeof(int));
@@ -79,10 +80,7 @@ int bubbleSort(Queue *head, int length){
                 temp = aux1->aluno;
                 aux1->aluno = aux2->aluno;
                 aux2->aluno = temp;
-                v[i] = aux1->aluno;
-                v[++i] = aux2->aluno; 
-                track(aux1->aluno, aux2->aluno, length, v);
-                i++;
+                track(aux1->aluno, aux2->aluno, length, v);            
             }
         }
     }
@@ -104,6 +102,7 @@ int main(void){
         Queue *head = createQueue();
         Queue *tail = head;
         scanf("%d", &length);
+        getchar();
 
         if(fgets(entrada, 4000, stdin) != NULL){
             entrada[strcspn(entrada, "\n")] = '\0';
@@ -124,5 +123,6 @@ int main(void){
 
     free(entrada);
     free(contador);
+
     return 0;
 }
