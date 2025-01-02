@@ -30,7 +30,7 @@ void printAll(int *v1, int *v2, int *v3, int size, clock_t start, clock_t end){
 
     // Verificando tempo de execução do algoritmo de ordenação => t3
     start = clock(); // Armazena tempo
-    merge(v3, 0, size);
+    quickSort(v3, 0, size);
     end = clock(); // tempo final - tempo inicial
     // Imprime o tempo na tela
     printf("Tempo de execucao (Quick Sort): %lf\n\n", (double) (end - start) / CLOCKS_PER_SEC); //Conversão para segundos

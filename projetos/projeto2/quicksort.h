@@ -47,7 +47,6 @@ void quickSort(int *v, int start, int end){
         quickSort(v, start, middle - 1);
         quickSort(v, middle + 1, end);
     }
-    
 }
 
 void printQuick(int *v, int end){
