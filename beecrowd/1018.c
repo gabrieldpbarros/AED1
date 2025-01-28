@@ -1,7 +1,6 @@
 #include <stdio.h>
 
 int main(void){
-
 	int N, n100, n50, n20, n10, n5, n2, n1;
 	n100 = 0;
 	n50 = 0;
