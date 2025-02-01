@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <string.h>
 
-int main() {
+int main(void){
     char digito;
     char numero[101];
 
-    while (1) {
+    while(1){
         scanf(" %c %s", &digito, numero);
 
         if(digito == '0' && strcmp(numero, "0") == 0)
@@ -14,8 +14,8 @@ int main() {
         char resultado[101];
         int index = 0;
 
-        for (int i = 0; numero[i] != '\0'; ++i)
-            if (numero[i] != digito)
+        for(int i = 0; numero[i] != '\0'; ++i)
+            if(numero[i] != digito)
                 resultado[index++] = numero[i];
 
         resultado[index] = '\0';
