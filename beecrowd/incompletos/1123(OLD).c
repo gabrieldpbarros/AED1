@@ -66,7 +66,7 @@ void dijkstra(int **graph, int matrix_order, int start, int destination){
     free(visited);
     }
 
-    int main(void){
+int main(void){
     int n_cidades, n_estradas, n_servico, v_consertado;
     scanf("%d %d %d %d", &n_cidades, &n_estradas, &n_servico, &v_consertado);
 
